@@ -1,0 +1,50 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_urls static %}
+
+{% block extrahead %}
+{{ block.super }}
+<script type="text/javascript">
+django.jQuery(document).ready(function($) {
+    // Only show preview button if we have an object (edit page, not add page)
+    // FIX: Check that original_object exists and has a pk before adding the button
+    if ($('#id_id').length > 0 && $('#id_subject').val().length > 0) {
+        const previewBtn = '<a href="#" class="button" id="preview_email_btn" style="margin-left:10px;">Preview Email</a>';
+        $('div.submit-row').append(previewBtn);
+
+        $('#preview_email_btn').on('click', function(e) {
+            e.preventDefault();
+            const win = window.open('', '_blank');
+            win.document.write('<html><head><title>Loading Preview...</title></head><body style="text-align:center;margin-top:50px;">Loading...</body></html>');
+            
+            let payload = {};
+            
+            // FIX: Use the actual object_id, not original_object.pk (both work, but this is cleaner)
+            const objectId = $('#id_id').val();
+            
+            if (!objectId) {
+                alert("Please save the mailing first before previewing.");
+                win.close();
+                return;
+            }
+            
+            fetch(`/admin/mailings/mailing/${objectId}/preview/`, {
+                method: 'POST',
+                headers: {'X-Requested-With': 'XMLHttpRequest', 'X-CSRFToken': '{{ csrf_token }}'},
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.html) {
+                    doc = win.document.open(); doc.write(data.html); doc.close();
+                } else {
+                    alert("Failed to render: " + (data.error || "Unknown error"));
+                }
+            }).catch(err => {
+                alert("Request failed: " + err.message);
+                win.close();
+            });
+        });
+    }
+});
+</script>
+{% endblock %}

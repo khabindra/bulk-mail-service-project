@@ -1,0 +1,27 @@
+celery -A project worker --loglevel=info -P solo   
+celery -A project worker -l INFO -P solo 
+celery -A project worker --loglevel=info --pool=threads --concurrency=8
+
+docker-compose up
+
+celery -A project flower --port=5555
+`celery -A project flower --address=127.0.0.1 --port=5555`
+
+http://127.0.0.1:5555/  =>flower 
+http://localhost:5555/  => redis dashbaord
+
+celery -A myproject worker -l info --concurrency=4
+
+
+docker run -d --name redis-bulkmail -p 6379:6379 redis
+--runs the redis container named "redis-bulkmail" in port 6379 
+
+
+celery -A project beat --loglevel=info
+-- for running beat for output storing and viewing in db or periodic task.
+
+
+https://claude.ai/public/artifacts/fc413ade-5585-41b4-97a7-eaf09ccf62d3
+
+https://claude.ai/public/artifacts/dd399180-de59-460e-8b73-da23f87891c3
+

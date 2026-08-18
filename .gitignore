@@ -1,0 +1,57 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+.env/
+
+# Django specific
+db.sqlite3
+db.sqlite3-journal
+
+# Media files (if you want to ignore uploaded media)
+media/
+
+# Static files (if generated locally and not committed)
+static/
+
+# Python egg files
+*.egg
+*.egg-info/
+
+# Migrations (optional, if you want to ignore migration files)
+# Typically, you might want to keep migration files in version control
+# Uncomment the next line to ignore migrations
+# */migrations/*
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+.pytest_cache/
+
+# Secrets / environment variables
+.env
+
+
+.env
+.env.*
+!.env.example
